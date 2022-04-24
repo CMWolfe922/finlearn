@@ -100,9 +100,7 @@ class TestFundamentalData(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    s = time.time()
-    unittest.main()
-
-    e = time.time()
-
+    s = time.time()  # Time Tests: start timer
+    unittest.main()  # execute tests
+    e = time.time()  # end timer
     print(e - s)
