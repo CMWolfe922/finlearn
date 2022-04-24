@@ -7,14 +7,13 @@ import pandas as pd
 import random
 import unittest
 import time
-from models.sqliteModels import _query_symbols
+from models.sqliteModels import generate_symbols
 
-# Get symbols from marketdata.db database
-symbols = _query_symbols()
+# use symbol generator to create 100 random stock symbols
+symbol = generate_symbols
 
-# choose 100 stocks at random from the list of stocks:
-
-# list of stocks to try the multiprocessing map func on
+# create a list of stocks to try the multiprocessing map func on
+# by generating 100 symbols
 
 stocks = ['MSFT', 'FB', 'AMZN', 'AAPL', 'CHWY',
           'BAC', 'JNJ', 'BA', 'LMT', 'KO', 'SHOP']
@@ -104,7 +103,7 @@ class TestFundamentalData(unittest.TestCase):
 
 if __name__ == '__main__':
     s = time.time()
-    # unittest.main()
+    unittest.main()
 
     e = time.time()
 

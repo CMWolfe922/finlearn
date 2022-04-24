@@ -73,7 +73,7 @@ def _query_symbols():
 # YIELD 1 SYMBOL AT A TIME.
 # ----------------------------------------------------------- #
 
-def generate_symbol():
+def generate_symbols():
     # table_name
     data = _query_symbols()
     symbols = [stock[0] for stock in data]
