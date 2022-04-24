@@ -74,7 +74,6 @@ def _query_symbols():
 # ----------------------------------------------------------- #
 
 def generate_symbols():
-    # table_name
     data = _query_symbols()
     symbols = [stock[0] for stock in data]
     for symbol in symbols:

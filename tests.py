@@ -10,13 +10,11 @@ import time
 from models.sqliteModels import generate_symbols
 
 # use symbol generator to create 100 random stock symbols
-symbol = generate_symbols
+symbol = generate_symbols()
 
 # create a list of stocks to try the multiprocessing map func on
 # by generating 100 symbols
-
-stocks = ['MSFT', 'FB', 'AMZN', 'AAPL', 'CHWY',
-          'BAC', 'JNJ', 'BA', 'LMT', 'KO', 'SHOP']
+stocks = [next(symbol) for i in range(100)]
 
 
 class TestPriceHistory(unittest.TestCase):
