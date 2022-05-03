@@ -16,15 +16,15 @@ if __name__ == '__main__':
     s = time.time()
 
     # =========================================================================== #
-    # Generator function that will generate one symbol at a time for price
-    # history data. This way the function will run once for each symbol
-    stock = generate_symbols()
-
     # Get the quote and fundamental data using stock_chunks
     quote_data = pd.concat([quote.data(each) for each in stock_chunks])
     fundamental_data = pd.concat([fundamental.data(each)
                                  for each in stock_chunks])
+
+    # Generator function that will generate one symbol at a time for price
+    # history data. This way the function will run once for each symbol
+    # stock = generate_symbols()
     # =========================================================================== #
 
     e = time.time()
-    print(e - s)
+    print("[+] Program finished in {} minutes".format((e - s) / 60))

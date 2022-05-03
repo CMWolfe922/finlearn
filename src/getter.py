@@ -16,7 +16,7 @@ class Get:
         :param n: Lets you know how long you want each chunk to be
         """
         n = max(1, n)
-        print(f"[2] Chunk symbols into groups of 200..")
+        print(f"[+] Chunk symbols into groups of 200..")
         return (l[i: i + n] for i in range(0, len(l), n))
 
     # This method will return a DataFrame with all the companies

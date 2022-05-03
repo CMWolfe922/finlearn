@@ -37,12 +37,8 @@ def _insert_companies(company_df, db_name=market_db_uri, table_name="companies")
     # the program is run and no database exists yet.
 
 
-# ================================================================================ #
-# FUNCTION BEGINS: second step, give values to
-table_name = "companies"
-
 # ----------------------------------------------------------- #
-# CREATE FUNCTION TO QUERY SYMBOLS FROM DB IF IT EXISTS
+# CREATE FUNCTION TO QUERY SYMBOLS FROM DB
 # ----------------------------------------------------------- #
 
 
@@ -64,7 +60,7 @@ def _query_symbols():
             symbols.append(row)
 
         if len(symbols) > 19000:
-            print("[+] Queried Symbols")
+            print("[+] List of all symbols created.")
             return symbols
 
 
