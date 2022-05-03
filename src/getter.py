@@ -1,8 +1,10 @@
-# Create a Get class that gets particular data 
-# from the web or from other methods 
-import string, requests
+# Create a Get class that gets particular data
+# from the web or from other methods
+import string
+import requests
 import pandas as pd
 from bs4 import BeautifulSoup as bs
+from models.sqliteModels import _query_symbols
 
 
 class Get:
@@ -114,5 +116,12 @@ class Get:
 
         return companies_df
 
+
 # Create a Get Obj for Tests
 get = Get()
+
+# Create a stock_chunks variable to be used with fundamentals and quotes
+_stocks = _query_symbols
+
+# ready to be imported into whichever script needs it:
+stock_chunks = list(get.chunks(list(set(_stocks)), 200))

@@ -1,4 +1,3 @@
-from operator import length_hint
 from src.pricehistory import pricehistory
 from src.quotes import quote
 from src.fundamentals import fundamental
