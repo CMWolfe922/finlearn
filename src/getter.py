@@ -121,7 +121,7 @@ class Get:
 get = Get()
 
 # Create a stock_chunks variable to be used with fundamentals and quotes
-_stocks = _query_symbols
+_stocks = _query_symbols()
 
 # ready to be imported into whichever script needs it:
 stock_chunks = list(get.chunks(list(set(_stocks)), 200))
