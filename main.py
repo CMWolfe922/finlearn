@@ -1,9 +1,8 @@
-from src.getter import Get
+from src.getter import Get, stock_chunks
 from src.pricehistory import pricehistory
 from src.fundamentals import fundamental
 from src.quotes import quote
 from models.sqliteModels import generate_symbols
-from models.sqliteModels import stock_chunks
 import pandas as pd
 import os
 import time
