@@ -1,5 +1,5 @@
 from src.getter import Get, stock_chunks
-from src.pricehistory import pricehistory
+from src.pricehistory import price_history
 from src.fundamentals import fundamental
 from src.quotes import quote
 from models.sqliteModels import generate_symbols
