@@ -12,14 +12,14 @@ pricehistory_db = MYSQL_PRICEHISTORY_DB
 
 
 # CREATE A FUNCTION FOR CONNECTING TO EACH DATABASE:
-def connect_to_marketdata(database):
+def create_marketdata_engine(database=marketdata_db):
     DB = database
     connection_uri = f"mysql+mysqldb://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{DB}"
     _engine = create_engine(connection_uri, echo=True)
     return _engine
 
 
-def connect_to_pricehistory(database):
+def create_pricehistory_engine(database=pricehistory_db):
     DB = database
     connection_uri = f"mysql+mysqldb://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{DB}"
     _engine = create_engine(connection_uri, echo=True)
@@ -48,6 +48,14 @@ def _select_symbols():
         return symbols
     except Error as e:
         print(f"[-] Error Ocurred: ---> {e}; ")
+
+
+# CREATE A FUNCTION TO GENERATE ONE SYMBOL AT A TIME:
+def generate_symbols():
+    data = _select_symbols()
+    symbols = [stock[0] for stock in data]
+    for symbol in symbols:
+        yield symbol
 
 
 # ========================================================================================== #
@@ -99,3 +107,24 @@ def insert_quote_and_fundamental_data_mysql(quote_data, fundamental_data, engine
     # [2] use the insert_fundamental_data function imported from models.py
     # to insert fundamental data into the database.
     insert_fundamental_data_mysql(fundamental_data, engine)
+
+
+# ----------------------------------------------------------- #
+# CREATE FUNCTION TO INSERT COMPANY DATA FROM STOCKDATA
+# ----------------------------------------------------------- #
+def _insert_companies(df, engine):
+    """
+    :param company_df: pandas DataFrame of list of companies
+    :param db_name: name of database to insert data into
+    :param table_name: name of table to save data to in database
+
+    :return: Message stating companies were inserted correctly
+    or a message saying database and table already exists. If
+    table and database already exists, then the query_symbols
+    function will be called
+    """
+
+    table = "companies"
+    print(f"[+] Insert companies into {table} table in marketdata database.. ")
+    df.to_sql(name=table, con=engine, if_exists="replace", index=True)
+    print(f"[+] Company Data Inserted! ")

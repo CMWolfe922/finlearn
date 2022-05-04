@@ -5,7 +5,7 @@ from .urls import TDA_BASE
 from config.secrets import TDA_APIKEY, PERIOD, PERIODTYPE, FREQUENCY, FREQUENCYTYPE
 import requests
 import pandas as pd
-from models.mysql_db import connect_to_pricehistory, pricehistory_db
+from models.mysql_db import create_pricehistory_engine
 
 
 class PriceHistory:
@@ -53,7 +53,7 @@ class PriceHistory:
         return df
 
     def insert_price_data(self, df, table):
-        engine = connect_to_pricehistory(pricehistory_db)
+        engine = create_pricehistory_engine()
         df.to_sql(name=table, con=engine, if_exists='append', index=False)
 
 
