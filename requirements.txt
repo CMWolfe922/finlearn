@@ -36,6 +36,7 @@ gast==0.5.3
 google-auth==2.6.3
 google-auth-oauthlib==0.4.6
 google-pasta==0.2.0
+greenlet==1.1.2
 grpcio==1.44.0
 h5py==3.6.0
 humanize==4.0.0
@@ -64,6 +65,7 @@ multidict==6.0.2
 murmurhash==1.0.6
 mysql-client==0.0.1
 mysql-connector-python==8.0.28
+mysqlclient==2.1.0
 nest-asyncio==1.5.5
 newspaper3k==0.2.8
 nltk==3.7
@@ -112,6 +114,7 @@ soupsieve==2.3.2
 spacy==3.2.4
 spacy-legacy==3.0.9
 spacy-loggers==1.0.2
+SQLAlchemy==1.4.36
 srsly==2.4.2
 stack-data==0.2.0
 tensorboard==2.8.0
