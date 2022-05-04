@@ -2,8 +2,9 @@ from src.getter import Get, stock_chunks
 from src.pricehistory import price_history
 from src.fundamentals import fundamental
 from src.quotes import quote
+from sqlalchemy import create_engine
 from models.sqliteModels import generate_symbols
-from models.mysql_db import insert_quote_and_fundamental_data_mysql, connect_to_marketdata, marketdata_db
+from models.mysql_db import insert_quote_and_fundamental_data_mysql, connection_uri, marketdata_db
 import pandas as pd
 import os
 import time
@@ -23,10 +24,11 @@ if __name__ == '__main__':
                                  for each in stock_chunks])
 
     # create the marketdata database engine:
-    marketdata_engine = connect_to_marketdata(marketdata_db)
-    # insert the quote and fundamental data
+    engine = connection_uri + '/' + marketdata_db
+
+    # insert the quote and fundamental data into mysql db
     insert_quote_and_fundamental_data_mysql(
-        quote_data, fundamental_data, marketdata_engine)
+        quote_data, fundamental_data, engine)
 
     # Generator function that will generate one symbol at a time for price
     # history data. This way the function will run once for each symbol

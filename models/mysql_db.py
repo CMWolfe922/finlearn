@@ -27,7 +27,7 @@ def connect_to_pricehistory(database):
 
 
 # CONNECTION URI FOR SQLALCHEMY TO CREATE ENGINE. MUST ADD /{DB} TO END WHEN USED
-connection_uri = f"mysql+mysqlconnector://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}"
+connection_uri = f"mysql+mysqldb://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}"
 
 
 # CREATE A FUNCTION TO SELECT SYMBOLS FROM MYSQL DATABASE
