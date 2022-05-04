@@ -56,6 +56,14 @@ class PriceHistory:
         engine = create_pricehistory_engine()
         df.to_sql(name=table, con=engine, if_exists='append', index=False)
 
+    def _set_table_name(self):
+        if FREQUENCY > 1:
+            name = f"_{FREQUENCY}_{FREQUENCYTYPE}_data"
+            return name
+        else:
+            name = f"one_{FREQUENCYTYPE}_data"
+            return name
+
 
 params = {
     'symbol': 'stock',
