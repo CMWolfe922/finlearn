@@ -7,11 +7,45 @@ import requests
 import pandas as pd
 from models.mysql_db import create_pricehistory_engine
 
+"""
+=================================================================================
+THE PRICE HISTORY CLASS|
+-----------------------+
+This will be responsible for getting the price history for every symbol
+stored in the database. Using a generator function in the models.mysql_db
+script, I will be able to generate one symbol at a time and then execute
+the insert_price_data() method.
+
+I am going to try two different approaches. First, I will try the map()
+function to see if it can handle executing the function on that long of
+a list.
+
+If that doesn't work, I will try to utilize the generator function to
+generate one symbol at a time and only execute the insert method one
+stock at a time.
+=================================================================================
+"""
+
 
 class PriceHistory:
 
     def __init__(self, **params):
-        self.params = params
+        self.params = params  # params are set at bottom, imported from config.ini file
+        self.table_name = self._set_table_name()
+        self.pricehistory_engine = create_pricehistory_engine()
+
+    def _set_table_name(self):
+        """
+        Simple way to set the name of the table to save the price data to
+        dynamically. This way no matter what the params are, the data will
+        be saved to correct table.
+        """
+        if FREQUENCY > 1:
+            name = f"_{FREQUENCY}_{FREQUENCYTYPE}_data"
+            return name
+        else:
+            name = f"one_{FREQUENCYTYPE}_data"
+            return name
 
     def data(self, stock):
         """
@@ -52,17 +86,15 @@ class PriceHistory:
 
         return df
 
-    def insert_price_data(self, df, table):
-        engine = create_pricehistory_engine()
-        df.to_sql(name=table, con=engine, if_exists='append', index=False)
+    def insert_price_data(self, stock):
+        data = self.data(stock)
+        table = self.table_name
+        engine = self.pricehistory_engine
+        data.to_sql(name=table, con=engine, if_exists='append', index=False)
 
-    def _set_table_name(self):
-        if FREQUENCY > 1:
-            name = f"_{FREQUENCY}_{FREQUENCYTYPE}_data"
-            return name
-        else:
-            name = f"one_{FREQUENCYTYPE}_data"
-            return name
+    def execute_main(self):
+
+        pass
 
 
 params = {
