@@ -7,34 +7,34 @@ import pandas as pd
 h, u, pw = MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD
 
 # DATABASES FOR INSERTING AND QUERYING DATA FROM:
-marketdata = MYSQL_MARKET_DB
-pricehistory = MYSQL_PRICEHISTORY_DB
+marketdata_db = MYSQL_MARKET_DB
+pricehistory_db = MYSQL_PRICEHISTORY_DB
 
 
 # CREATE A FUNCTION FOR CONNECTING TO EACH DATABASE:
 def connect_to_marketdata(database):
     DB = database
-    connection_uri = f"mysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{DB}"
+    connection_uri = f"mysql+mysqldb://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{DB}"
     _engine = create_engine(connection_uri, echo=True)
     return _engine
 
 
 def connect_to_pricehistory(database):
     DB = database
-    connection_uri = f"mysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{DB}"
+    connection_uri = f"mysql+mysqldb://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{DB}"
     _engine = create_engine(connection_uri, echo=True)
     return _engine
 
 
-# CREATE A CONNECTION ENGINE USING SQLALchemy
-connection_uri = f"mysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{DB}"
+# CONNECTION URI FOR SQLALCHEMY TO CREATE ENGINE. MUST ADD /{DB} TO END WHEN USED
+connection_uri = f"mysql+mysqlconnector://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}"
 
 
 # CREATE A FUNCTION TO SELECT SYMBOLS FROM MYSQL DATABASE
 def _select_symbols():
     """Selects rows from table. Give DB name, table name, and
     num of rows to select and display"""
-    db = marketdata
+    db = marketdata_db
     table = 'companies'
     query_symbols = f"SELECT symbol FROM {table}"
     try:
