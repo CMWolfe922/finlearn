@@ -99,3 +99,11 @@ def generate_symbols():
 #         if len(symbols) > 19000:
 #             print("[+] Queried Symbols")
 #             return symbols
+
+
+def insert_price_data(table_name, df):
+    db = ph_db_uri
+    conn = sql.connect(db)
+    df.to_sql(name=table_name, con=conn, if_exists="append", index=False)
+    conn.close()
+    print("[+] Price Data Inserted")
