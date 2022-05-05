@@ -13,3 +13,5 @@ Also, since most of the analysis is focused on minute data, my price predictor i
 ---
 
 > TODO: Finish building the database connection so I can workon the data accumulation and get the data collection up and running.
+
+> Last place I left off was `pricehistory003` which was created from `main002`
