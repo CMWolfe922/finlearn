@@ -50,11 +50,21 @@ def _select_symbols():
         print(f"[-] Error Ocurred: ---> {e}; ")
 
 
+# CREATE A GENERATOR FUNCTION TO SELECT SYMBOLS FROM MYSQL ONE AT A TIME
+def generate_symbols():
+    data = _select_symbols()
+    symbols = [stock for stock in data]
+    for symbol in symbols:
+        yield symbol
+
+
 # ========================================================================================== #
 # FUNCTIONS TO INSERT QUOTE AND FUNDAMENTAL DATA INTO THE MARKETDATA DATABASE
 # ========================================================================================== #
 
 # FUNCTION TO INSERT QUOTE DATA INTO DATABASE
+
+
 def insert_quote_data_mysql(quote_df, engine):
     """
     :param quote_df: Quote Data Dataframe
