@@ -40,7 +40,7 @@ class PriceHistory:
         dynamically. This way no matter what the params are, the data will
         be saved to correct table.
         """
-        if FREQUENCY > 1:
+        if int(FREQUENCY) > 1:
             name = f"_{FREQUENCY}_{FREQUENCYTYPE}_data"
             return name
         else:
