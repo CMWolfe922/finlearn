@@ -12,15 +12,15 @@ pricehistory_db = MYSQL_PRICEHISTORY_DB
 
 
 # CREATE A FUNCTION FOR CONNECTING TO EACH DATABASE:
-def connect_to_marketdata(database):
-    DB = database
+def create_marketdata_engine():
+    DB = marketdata_db
     connection_uri = f"mysql+mysqldb://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{DB}"
     _engine = create_engine(connection_uri, echo=True)
     return _engine
 
 
-def connect_to_pricehistory(database):
-    DB = database
+def create_pricehistory_engine():
+    DB = pricehistory_db
     connection_uri = f"mysql+mysqldb://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{DB}"
     _engine = create_engine(connection_uri, echo=True)
     return _engine
