@@ -5,7 +5,16 @@ from .urls import TDA_BASE
 from config.secrets import TDA_APIKEY, PERIOD, PERIODTYPE, FREQUENCY, FREQUENCYTYPE
 import requests
 import pandas as pd
-from models.mysql_db import create_pricehistory_engine
+from models.mysql_db import create_pricehistory_engine, generate_symbols
+from loguru import logger
+import os.path
+
+# CREATE THE LOGGER FOR THIS SCRIPT:
+log_path = str(os.path.pardir) + '/logs/'
+base_fmt = "[{time:YYYY-MM-DD at HH:mm:ss}]|[{name}-<lvl>{message}</lvl>]"
+logger.add(log_path+"pricehistory.log", rotation="20 MB", colorize=True)
+logger.add(enqueue=True, catch=True)
+
 
 """
 =================================================================================
@@ -33,6 +42,8 @@ class PriceHistory:
         self.params = params  # params are set at bottom, imported from config.ini file
         self.table_name = self._set_table_name()
         self.pricehistory_engine = create_pricehistory_engine()
+        logger.info(
+            "{time:YYYY-MM-DD HH:MM:SS} - PriceHistory Object Initialized: Table {} created", self.table_name)
 
     def _set_table_name(self):
         """
@@ -91,10 +102,35 @@ class PriceHistory:
         table = self.table_name
         engine = self.pricehistory_engine
         data.to_sql(name=table, con=engine, if_exists='append', index=False)
+        logger.info(base_fmt+"{} inserted successfully!", stock)
 
     def execute_main(self):
-
-        pass
+        symbol = generate_symbols()
+        stocks = [next(symbol) for i in range(100)]
+        try:
+            table = price_history.table_name
+            count = 0
+            while True:
+                try:
+                    stock = next(symbol)
+                    self.insert_price_data(stock)
+                    logger.info(
+                        "[{time}-{}]<green>Price History Data Inserted Successfully</green>", stock)
+                    count += 1
+                    if count == 100:
+                        break
+                except KeyError as ke:
+                    logger.error("Failed to insert {}: Due to {}", stock, ke)
+                    continue
+        except ValueError as ve:
+            logger.error("Error Caused Due to {}", ve)
+            if ve:
+                engine = self.pricehistory_engine
+                stmt = "DROP TABLE IF EXISTS {table}".format(self.table_name)
+                engine.execute(stmt)
+                logger.info("SQL Statement {} Executed...", stmt)
+        except Exception as e:
+            logger.error("Error Caused Due to {}", e)
 
 
 params = {
