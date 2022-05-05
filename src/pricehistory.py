@@ -8,12 +8,13 @@ import pandas as pd
 from models.mysql_db import create_pricehistory_engine, generate_symbols
 from loguru import logger
 import os.path
+import time
 
 # CREATE THE LOGGER FOR THIS SCRIPT:
 log_path = str(os.path.pardir) + '/logs/'
 base_fmt = "[{time:YYYY-MM-DD at HH:mm:ss}]|[{name}-<lvl>{message}</lvl>]"
-logger.add(log_path+"pricehistory.log", rotation="20 MB", colorize=True)
-logger.add(enqueue=True, catch=True)
+logger.add(log_path+"pricehistory.log", rotation="20 MB",
+           colorize=True, enqueue=True, catch=True)
 
 
 """
@@ -106,9 +107,7 @@ class PriceHistory:
 
     def execute_main(self):
         symbol = generate_symbols()
-        stocks = [next(symbol) for i in range(100)]
         try:
-            table = price_history.table_name
             count = 0
             while True:
                 try:
@@ -117,8 +116,6 @@ class PriceHistory:
                     logger.info(
                         "[{time}-{}]<green>Price History Data Inserted Successfully</green>", stock)
                     count += 1
-                    if count == 100:
-                        break
                 except KeyError as ke:
                     logger.error("Failed to insert {}: Due to {}", stock, ke)
                     continue
@@ -131,6 +128,8 @@ class PriceHistory:
                 logger.info("SQL Statement {} Executed...", stmt)
         except Exception as e:
             logger.error("Error Caused Due to {}", e)
+        finally:
+            logger.info("[{}] Stocks Inserted Successfully!", count)
 
 
 params = {
