@@ -117,6 +117,9 @@ class PriceHistory:
                 except KeyError as ke:
                     logger.error("Failed to insert {}: Due to {}", stock, ke)
                     continue
+                except StopIteration as si:
+                    logger.info("[{time} - {name}] {} No More Stocks to Get Data for", si)
+                    continue
         except ValueError as ve:
             logger.error("Error Caused Due to {}", ve)
             if ve:
