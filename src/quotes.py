@@ -2,6 +2,7 @@
 # This script is responsible for creating a class for
 # retrieving quote data
 
+import multiprocessing
 from .urls import TDA_BASE
 from config.secrets import TDA_APIKEY
 import requests
@@ -9,15 +10,34 @@ import pandas as pd
 from datetime import datetime
 from pytz import timezone
 import time
+from loguru import logger
+import os.path
 
+# DATE BUILDING AND MANAGEMENT
 today = datetime.today().astimezone(timezone("US/Central"))
 today_fmt = today.strftime("%m-%d-%Y")
 
+# CREATE THE LOGGER FOR THIS SCRIPT:
+log_path = str(os.path.pardir) + '/logs/'
+base_fmt = "[{time:YYYY-MM-DD at HH:mm:ss}]|[{name}-<lvl>{message}</lvl>]"
+logger.add(log_path+"main.log", rotation="5 MB",
+           colorize=True, enqueue=True, catch=True)
 
 class Quote:
 
     def __init__(self, *stocks):
         self.stocks = stocks
+        self.stock_chunks = self.chunks(stocks)
+
+        # This function chunks the list of symbols into groups of 200
+    def chunks(self, l:list, n:int=200):
+        """
+        :param l: takes in a list
+        :param n: Lets you know how long you want each chunk to be
+        """
+        n = max(1, n)
+        print(f"[+] Chunk symbols into groups of 200..")
+        return (l[i: i + n] for i in range(0, len(l), n))
 
     def data(self, stock):
         """
@@ -50,6 +70,22 @@ class Quote:
 
         return df
 
+    def execute_main(self):
+        logger.info("[-] Executing the main Quote Object Method - {time}")
+        # Get the quote data using stock_chunks
+        quote_data = pd.concat([self.data(each) for each in self.stock_chunks])
+        logger.info("[+] Quote Data Received - {time}")
+        
+
+class ProcessQuote(multiprocessing.Process):
+
+    def __init__(self, task):
+        super(ProcessQuote, self).__init__()
+        self.task = task
+
+    def run(self):
+        # THIS WILL EXECUTE THE MAIN METHOD IN QUOTE USING MAP AND THREADED POOL PROCESSES:
+        pass 
 
 # create a quote obj to import to tests
 quote = Quote()
