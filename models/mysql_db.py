@@ -109,3 +109,26 @@ def insert_quote_and_fundamental_data_mysql(quote_data, fundamental_data, engine
     # [2] use the insert_fundamental_data function imported from models.py
     # to insert fundamental data into the database.
     insert_fundamental_data_mysql(fundamental_data, engine)
+
+
+# ----------------------------------------------------------- #
+# CREATE FUNCTION TO INSERT COMPANY DATA FROM STOCKDATA
+# ----------------------------------------------------------- #
+def _insert_companies(df, table_name="companies"):
+    """
+    :param company_df: pandas DataFrame of list of companies
+    :param db_name: name of database to insert data into
+    :param table_name: name of table to save data to in database
+
+    :return: Message stating companies were inserted correctly
+    or a message saying database and table already exists. If
+    table and database already exists, then the query_symbols
+    function will be called
+    """
+
+    table = table_name
+    engine = create_marketdata_engine()
+
+    df.to_sql(name=table, con=engine, if_exists="replace", index=True)
+    # basically this should only work the very first time
+    # the program is run and no database exists yet.
