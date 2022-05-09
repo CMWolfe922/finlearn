@@ -43,8 +43,6 @@ class PriceHistory:
         self.params = params  # params are set at bottom, imported from config.ini file
         self.table_name = self._set_table_name()
         self.pricehistory_engine = create_pricehistory_engine()
-        logger.info(
-            "{time:YYYY-MM-DD HH:MM:SS} - PriceHistory Object Initialized: Table {} created", self.table_name)
 
     def _set_table_name(self):
         """
@@ -119,6 +117,9 @@ class PriceHistory:
                 except KeyError as ke:
                     logger.error("Failed to insert {}: Due to {}", stock, ke)
                     continue
+                except StopIteration as si:
+                    logger.info("[{time} - {name}] {} No More Stocks to Get Data for", si)
+                    continue
         except ValueError as ve:
             logger.error("Error Caused Due to {}", ve)
             if ve:
@@ -141,3 +142,5 @@ params = {
 }
 
 price_history = PriceHistory(params=params)
+logger.info(
+    "{time} - PriceHistory Object Initialized: Table {table} created", table=price_history.table_name)
