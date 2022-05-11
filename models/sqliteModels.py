@@ -1,6 +1,4 @@
 import sqlite3 as sql
-from dataclasses import dataclass
-from humanize import naturaltime
 from time import time
 import pandas as pd
 import os
