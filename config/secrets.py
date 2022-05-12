@@ -10,13 +10,13 @@ TDA_USERNAME = config['TDA']['username']
 TDA_PASSWORD = config['TDA']['password']
 
 # MySQL Ubuntu Database
-MYSQL_USER = config['MySQL Windows']['user']
-MYSQL_PASSWORD = config['MySQL Windows']['password']
-MYSQL_HOST = config['MySQL Windows']['host']
-MYSQL_PORT = config['MySQL Windows']['port']
-MYSQL_CONNECTION_STRING = config['MySQL Windows']['cxn_uri']
-MYSQL_MARKET_DB = config['MySQL Windows']['market_db']
-MYSQL_PRICEHISTORY_DB = config['MySQL Windows']['pricehistory_db']
+MYSQL_USER = config['MySQL Ubuntu']['user']
+MYSQL_PASSWORD = config['MySQL Ubuntu']['password']
+MYSQL_HOST = config['MySQL Ubuntu']['host']
+MYSQL_PORT = config['MySQL Ubuntu']['port']
+MYSQL_CONNECTION_STRING = config['MySQL Ubuntu']['cxn_uri']
+MYSQL_MARKET_DB = config['MySQL Ubuntu']['market_db']
+MYSQL_PRICEHISTORY_DB = config['MySQL Ubuntu']['pricehistory_db']
 
 # Reddit secrets
 REDDIT_APIKEY = config['Reddit']['apikey']
