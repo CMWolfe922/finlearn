@@ -32,7 +32,7 @@ class Fundamental:
         :param n: Lets you know how long you want each chunk to be
         """
         n = max(1, n)
-        print(f"[+] Chunk symbols into groups of 200..")
+        logger.info("[+] Stocks chunked into groups of 200..")
         return (l[i: i + n] for i in range(0, len(l), n))
 
     def data(self, stock):
