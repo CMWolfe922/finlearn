@@ -3,6 +3,14 @@ from mysql.connector import connect, Error
 from getpass import getpass
 from config.secrets import MYSQL_HOST, MYSQL_PORT, MYSQL_PASSWORD, MYSQL_USER, MYSQL_MARKET_DB, MYSQL_PRICEHISTORY_DB
 import pandas as pd
+from loguru import logger
+import os.path
+
+# CREATE THE LOGGER FOR THIS SCRIPT:
+log_path = str(os.path.pardir) + '/logs/'
+base_fmt = "[{time:YYYY-MM-DD at HH:mm:ss}]|[{name}-<lvl>{message}</lvl>]"
+logger.add(log_path+"main.log", rotation="2 MB",
+           colorize=True, enqueue=True, catch=True)
 
 h, u, pw = MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD
 
@@ -16,6 +24,7 @@ def create_marketdata_engine():
     DB = marketdata_db
     connection_uri = f"mysql+mysqldb://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{DB}"
     _engine = create_engine(connection_uri, echo=True)
+    logger.info("[+] marketdata database engine created successfully")
     return _engine
 
 
@@ -23,6 +32,7 @@ def create_pricehistory_engine():
     DB = pricehistory_db
     connection_uri = f"mysql+mysqldb://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{DB}"
     _engine = create_engine(connection_uri, echo=True)
+    logger.info("[+] pricehistory database engine created successfully")
     return _engine
 
 
@@ -47,7 +57,7 @@ def _select_symbols():
                     symbols.append(row[0])
         return symbols
     except Error as e:
-        print(f"[-] Error Ocurred: ---> {e}; ")
+        logger.error("[-] Error {} occured", e)
 
 
 # CREATE A GENERATOR FUNCTION TO SELECT SYMBOLS FROM MYSQL ONE AT A TIME
@@ -73,8 +83,9 @@ def insert_quote_data_mysql(quote_df, engine):
     try:
         quote_df.to_sql(name="quote_data", con=engine,
                         if_exists="append", index=False)
-        print("[+] Quote Data Inserted")
+        logger.info("[+] Quote data inserted successfully")
     except:
+        logger.error("[-] Quote data not inserted correctly")
         raise ValueError(
             "[-] Data not inserted correctly. Make sure datatype is correct"
         )
@@ -89,8 +100,9 @@ def insert_fundamental_data_mysql(fun_df, engine):
     try:
         fun_df.to_sql(name="fundamental_data", con=engine,
                       if_exists="append", index=False)
-        print("[+] Fundamental Data Inserted")
+        logger.info("[+] Fundamental Data Inserted")
     except:
+        logger.error("[-] Fundamental data not inserted correctly")
         raise ValueError(
             "[-] Data not inserted correctly. Make sure it was a string object."
         )

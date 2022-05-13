@@ -56,9 +56,9 @@ if __name__ == '__main__':
     # =========================================================================== #
     # STEP 2: EXECUTE MAIN PRICE HISTORY METHOD TO INSERT ALL PRICE DATA
     # =========================================================================== #
-    logger.info("[-] Starting price_history.execute_main()")
-    price_history.execute_main()
-    logger.info("[+] Finished price_history.execute_main()")
+    # logger.info("[-] Starting price_history.execute_main()")
+    # price_history.execute_main()
+    # logger.info("[+] Finished price_history.execute_main()")
     # =========================================================================== #
 
     e = time.time()
