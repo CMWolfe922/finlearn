@@ -4,6 +4,7 @@
 from .urls import TDA_BASE
 from config.secrets import TDA_APIKEY, PERIOD, PERIODTYPE, FREQUENCY, FREQUENCYTYPE
 import requests
+import multiprocessing
 import pandas as pd
 from models.mysql_db import create_pricehistory_engine, generate_symbols
 from loguru import logger
@@ -133,10 +134,10 @@ class PriceHistory:
             logger.info("[{}] Stocks Inserted Successfully!", count)
 
 
-class ProcessQuote(multiprocessing.Process):
+class ProcessPricehistory(multiprocessing.Process):
 
     def __init__(self, task):
-        super(ProcessQuote, self).__init__()
+        super(ProcessPricehistory, self).__init__()
         self.task = task
 
     def run(self):
