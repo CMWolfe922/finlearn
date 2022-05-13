@@ -44,16 +44,6 @@ if __name__ == '__main__':
     fundamental.execute_main()
     logger.info("[+] Fundamental Data Received")
 
-    # # create the marketdata database engine:
-    # engine = connection_uri + '/' + marketdata_db
-    # logger.info("[+] Database engine created")
-
-    # # insert the quote and fundamental data into mysql db
-    # logger.info("[-] Starting insert_quote_and_fundamental_data")
-    # insert_quote_and_fundamental_data_mysql(
-    #     quote_data, fundamental_data, engine)
-    # logger.info("[+] insert_quote_and_fundamental_data Finished")
-
     # =========================================================================== #
     # STEP 2: EXECUTE MAIN PRICE HISTORY METHOD TO INSERT ALL PRICE DATA
     # =========================================================================== #
