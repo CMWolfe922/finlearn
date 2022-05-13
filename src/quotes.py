@@ -3,8 +3,8 @@
 # retrieving quote data
 
 import multiprocessing
-from .urls import TDA_BASE
-from config.secrets import TDA_APIKEY
+from urls import TDA_BASE
+from config.secrets import TDA_APIKEY 
 from models.mysql_db import insert_quote_data_mysql, create_marketdata_engine, _select_symbols
 import requests
 import pandas as pd
@@ -107,6 +107,8 @@ class ProcessQuote(multiprocessing.Process):
 # create a quote obj to import to tests
 quote = Quote(stocks=stocks)
 
+# # execute main method as a test
+# quote.execute_main()
 """
 The Quote data and Fundamental data both need to have there
 stock param lists chuncked into chuncks of 200. It allows
