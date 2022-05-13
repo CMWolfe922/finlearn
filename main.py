@@ -5,7 +5,6 @@ from src.fundamentals import Fundamental
 from src.quotes import Quote
 from loguru import logger
 from models.mysql_db import _select_symbols
-import pandas as pd
 import os
 import time
 
