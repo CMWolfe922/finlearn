@@ -1,9 +1,10 @@
-from src.getter import Get, stock_chunks
+#!/usr/bin/env python3
+
 # from src.pricehistory import price_history
-from src.fundamentals import fundamental
+from src.fundamentals import Fundamental
 from src.quotes import Quote
 from loguru import logger
-from models.mysql_db import insert_quote_and_fundamental_data_mysql, connection_uri, marketdata_db, _select_symbols
+from models.mysql_db import _select_symbols
 import pandas as pd
 import os
 import time
@@ -18,11 +19,11 @@ logger.add(log_path+"main.log", rotation="5 MB",
 # Select Symbols
 stocks = _select_symbols()
 
-# create a Get object
-get = Get()
-
 # Create Quote object
 quote = Quote(stocks=stocks)
+
+# Create Fundamental object
+fundamental = Fundamental(stocks=stocks)
 
 if __name__ == '__main__':
     logger.info("[+] Main Script Started")
@@ -38,11 +39,10 @@ if __name__ == '__main__':
     quote.execute_main()
     logger.info("[+] Quote Data Received")
 
-    # # Get the fundamental data using stock_chunks
-    # logger.info("[-] Getting Fundamental Data")
-    # fundamental_data = pd.concat([fundamental.data(each)
-    #                              for each in stock_chunks])
-    # logger.info("[+] Fundamental Data Received")
+    # Get the fundamental data using stock_chunks
+    logger.info("[-] Getting Fundamental Data")
+    fundamental.execute_main()
+    logger.info("[+] Fundamental Data Received")
 
     # # create the marketdata database engine:
     # engine = connection_uri + '/' + marketdata_db

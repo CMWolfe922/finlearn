@@ -81,10 +81,3 @@ class Fundamental:
 
         except Exception as e:
             logger.error("Error Caused Due to {}", e)
-
-
-"""
-The Quote data and Fundamental data both need to have there
-stock param lists chuncked into chuncks of 200. It allows
-for the methods to get a response more quickly.
-"""

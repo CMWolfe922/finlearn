@@ -24,10 +24,6 @@ base_fmt = "[{time:YYYY-MM-DD at HH:mm:ss}]|[{name}-<lvl>{message}</lvl>]"
 logger.add(log_path+"quotes.log", rotation="2 MB",
            colorize=True, enqueue=True, catch=True)
 
-# QUERY STOCK SYMBOLS FROM MYSQL DATABASE:
-stocks = _select_symbols()
-
-
 class Quote:
 
     def __init__(self, stocks: list):
@@ -103,14 +99,3 @@ class ProcessQuote(multiprocessing.Process):
         # THIS WILL EXECUTE THE MAIN METHOD IN QUOTE USING MAP AND THREADED POOL PROCESSES:
         pass
 
-
-# create a quote obj to import to tests
-quote = Quote(stocks=stocks)
-
-# # execute main method as a test
-# quote.execute_main()
-"""
-The Quote data and Fundamental data both need to have there
-stock param lists chuncked into chuncks of 200. It allows
-for the methods to get a response more quickly.
-"""
