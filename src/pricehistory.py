@@ -133,6 +133,16 @@ class PriceHistory:
             logger.info("[{}] Stocks Inserted Successfully!", count)
 
 
+class ProcessQuote(multiprocessing.Process):
+
+    def __init__(self, task):
+        super(ProcessQuote, self).__init__()
+        self.task = task
+
+    def run(self):
+        # THIS WILL EXECUTE THE MAIN METHOD IN QUOTE USING MAP AND THREADED POOL PROCESSES:
+        pass
+
 params = {
     'symbol': 'stock',
     'period': PERIOD,
