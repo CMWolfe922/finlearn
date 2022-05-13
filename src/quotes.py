@@ -32,8 +32,8 @@ class Quote:
 
     def __init__(self, stocks: list):
         self.stocks = stocks
-        self.stock_chunks = self.chunks(stocks)
-        self.engine = create_marketdata_engine()
+        self.stock_chunks = self.chunks(stocks) # Chunks the stock list upon instantiation 
+        self.engine = create_marketdata_engine() # Creates a database connection engine upon instantiation
 
         # This function chunks the list of symbols into groups of 200
     def chunks(self, l: list, n: int = 200):
@@ -77,6 +77,11 @@ class Quote:
         return df
 
     def execute_main(self):
+        """
+        :Description: Main method to obtain Quote data for every stock in the stocks list
+        passed to the Quotes() class when instantiated. This method will execute the 
+        Quote.data method using a chunked stocks list.
+        """
         logger.info("[-] Executing the main Quote Object Method - {time}")
         try:
             quote_data = pd.concat([self.data(each)
