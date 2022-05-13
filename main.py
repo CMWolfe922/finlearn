@@ -1,5 +1,5 @@
 from src.getter import Get, stock_chunks
-from src.pricehistory import price_history
+# from src.pricehistory import price_history
 from src.fundamentals import fundamental
 from src.quotes import Quote
 from loguru import logger
@@ -34,24 +34,25 @@ if __name__ == '__main__':
     # =========================================================================== #
     # Get the quote data using stock_chunks
     logger.info("[-] Getting Quote Data")
-    quote_data = pd.concat([quote.data(each) for each in stock_chunks])
+    # quote_data = pd.concat([quote.data(each) for each in stock_chunks])
+    quote.execute_main()
     logger.info("[+] Quote Data Received")
 
-    # Get the fundamental data using stock_chunks
-    logger.info("[-] Getting Fundamental Data")
-    fundamental_data = pd.concat([fundamental.data(each)
-                                 for each in stock_chunks])
-    logger.info("[+] Fundamental Data Received")
+    # # Get the fundamental data using stock_chunks
+    # logger.info("[-] Getting Fundamental Data")
+    # fundamental_data = pd.concat([fundamental.data(each)
+    #                              for each in stock_chunks])
+    # logger.info("[+] Fundamental Data Received")
 
-    # create the marketdata database engine:
-    engine = connection_uri + '/' + marketdata_db
-    logger.info("[+] Database engine created")
+    # # create the marketdata database engine:
+    # engine = connection_uri + '/' + marketdata_db
+    # logger.info("[+] Database engine created")
 
-    # insert the quote and fundamental data into mysql db
-    logger.info("[-] Starting insert_quote_and_fundamental_data")
-    insert_quote_and_fundamental_data_mysql(
-        quote_data, fundamental_data, engine)
-    logger.info("[+] insert_quote_and_fundamental_data Finished")
+    # # insert the quote and fundamental data into mysql db
+    # logger.info("[-] Starting insert_quote_and_fundamental_data")
+    # insert_quote_and_fundamental_data_mysql(
+    #     quote_data, fundamental_data, engine)
+    # logger.info("[+] insert_quote_and_fundamental_data Finished")
 
     # =========================================================================== #
     # STEP 2: EXECUTE MAIN PRICE HISTORY METHOD TO INSERT ALL PRICE DATA
