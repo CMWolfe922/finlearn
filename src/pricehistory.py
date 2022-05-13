@@ -13,7 +13,7 @@ import time
 # CREATE THE LOGGER FOR THIS SCRIPT:
 log_path = str(os.path.pardir) + '/logs/'
 base_fmt = "[{time:YYYY-MM-DD at HH:mm:ss}]|[{name}-<lvl>{message}</lvl>]"
-logger.add(log_path+"pricehistory.log", rotation="20 MB",
+logger.add(log_path+"pricehistory.log", format=base_fmt, level="DEBUG", rotation="20 MB",
            colorize=True, enqueue=True, catch=True)
 
 
@@ -143,4 +143,4 @@ params = {
 
 price_history = PriceHistory(params=params)
 logger.info(
-    "{time} - PriceHistory Object Initialized: Table {table} created", table=price_history.table_name)
+    "PriceHistory Object Initialized: Table {table} created", table=price_history.table_name)

@@ -3,7 +3,7 @@
 # retrieving quote data
 
 import multiprocessing
-from urls import TDA_BASE
+from .urls import TDA_BASE
 from config.secrets import TDA_APIKEY 
 from models.mysql_db import insert_quote_data_mysql, create_marketdata_engine, _select_symbols
 import requests
