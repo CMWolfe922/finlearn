@@ -4,15 +4,36 @@
 
 from .urls import TDA_BASE
 from config.secrets import TDA_APIKEY
+from models.mysql_db import create_marketdata_engine, insert_fundamental_data_mysql
 import requests
 import pandas as pd
 from time import sleep
+from loguru import logger
+import os.path
+
+# CREATE THE LOGGER FOR THIS SCRIPT:
+log_path = str(os.path.pardir) + '/logs/'
+base_fmt = "[{time:YYYY-MM-DD at HH:mm:ss}]|[{name}-<lvl>{message}</lvl>]"
+logger.add(log_path+"fundamentals.log", rotation="2 MB",
+           colorize=True, enqueue=True, catch=True)
 
 
 class Fundamental:
 
-    def __init__(self, *stocks):
+    def __init__(self, stocks: list):
         self.stocks = stocks
+        self.stock_chunks = self.chunks(stocks)
+        self.engine = create_marketdata_engine()
+
+    # This function chunks the list of symbols into groups of 200
+    def chunks(self, l: list, n: int = 200):
+        """
+        :param l: takes in a list
+        :param n: Lets you know how long you want each chunk to be
+        """
+        n = max(1, n)
+        print(f"[+] Chunk symbols into groups of 200..")
+        return (l[i: i + n] for i in range(0, len(l), n))
 
     def data(self, stock):
         """
@@ -45,9 +66,22 @@ class Fundamental:
 
         return df
 
+    def execute_main(self):
+        """
+        :Description: Main method to obtain Fundamental data for every stock in the stocks list
+        passed to the Fundamental() class when instantiated. This method will execute the 
+        Fundamental.data method using a chunked stocks list.
+        """
+        logger.info("[-] Executing the main Fundamental Object Method")
+        try:
+            fundamental_data = pd.concat([self.data(each)
+                                   for each in self.stock_chunks])
+            logger.info("[+] Fundamental Data Received")
+            insert_fundamental_data_mysql(fundamental_data, self.engine)
 
-# create a fundamental obj to import to tests
-fundamental = Fundamental()
+        except Exception as e:
+            logger.error("Error Caused Due to {}", e)
+
 
 """
 The Quote data and Fundamental data both need to have there
