@@ -1,8 +1,6 @@
 from sqlalchemy import create_engine
 from mysql.connector import connect, Error
-from getpass import getpass
 from config.secrets import MYSQL_HOST, MYSQL_PORT, MYSQL_PASSWORD, MYSQL_USER, MYSQL_MARKET_DB, MYSQL_PRICEHISTORY_DB
-import pandas as pd
 from loguru import logger
 import os.path
 
