@@ -53,9 +53,11 @@ class PriceHistory:
         """
         if int(FREQUENCY) > 1:
             name = f"_{FREQUENCY}_{FREQUENCYTYPE}_data"
+            logger.info("[+] Storing Pricehistory data to table: {}", name)
             return name
         else:
             name = f"one_{FREQUENCYTYPE}_data"
+            logger.info("[+] Storing Pricehistory data to table: {}", name)
             return name
 
     def data(self, stock):
@@ -98,11 +100,15 @@ class PriceHistory:
         return df
 
     def insert_price_data(self, stock):
-        data = self.data(stock)
-        table = self.table_name
-        engine = self.pricehistory_engine
-        data.to_sql(name=table, con=engine, if_exists='append', index=False)
-        logger.info(base_fmt+"{} inserted successfully!", stock)
+        try:
+            data = self.data(stock)
+            table = self.table_name
+            engine = self.pricehistory_engine
+            data.to_sql(name=table, con=engine,
+                        if_exists='append', index=False)
+            logger.info("{} inserted successfully!", stock)
+        except Exception as e:
+            logger.error("Error Caused Due to {}", e)
 
     def execute_main(self):
         symbol = generate_symbols()
@@ -119,7 +125,7 @@ class PriceHistory:
                     logger.error("Failed to insert {}: Due to {}", stock, ke)
                     continue
                 except StopIteration as si:
-                    logger.info("[{time} - {name}] {} No More Stocks to Get Data for", si)
+                    logger.info("{} No More Stocks to Get Data for", si)
                     continue
         except ValueError as ve:
             logger.error("Error Caused Due to {}", ve)
@@ -144,6 +150,7 @@ class ProcessPricehistory(multiprocessing.Process):
         # THIS WILL EXECUTE THE MAIN METHOD IN QUOTE USING MAP AND THREADED POOL PROCESSES:
         pass
 
+
 params = {
     'symbol': 'stock',
     'period': PERIOD,
@@ -154,4 +161,4 @@ params = {
 
 price_history = PriceHistory(params=params)
 logger.info(
-    "PriceHistory Object Initialized: Table {table} created", table=price_history.table_name)
+    "PriceHistory Object Initialized: Table {} created", price_history.table_name)
