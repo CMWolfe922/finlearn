@@ -100,12 +100,10 @@ class PriceHistory:
         return df
 
     def insert_price_data(self, stock):
-<<<<<<< HEAD
         data = self.data(stock)
         engine = self.pricehistory_engine
         data.to_sql(name=self.table_name, con=engine, if_exists='append', index=False)
         logger.info(base_fmt+"{} inserted successfully!", stock)
-=======
         try:
             data = self.data(stock)
             table = self.table_name
@@ -115,7 +113,6 @@ class PriceHistory:
             logger.info("{} inserted successfully!", stock)
         except Exception as e:
             logger.error("Error Caused Due to {}", e)
->>>>>>> 1df3ea0692ffb376891d0cfc7e794724e5320e31
 
     def execute_main(self):
         symbol = generate_symbols()
