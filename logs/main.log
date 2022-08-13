@@ -1,0 +1,16 @@
+[32m2022-05-14 13:51:55.114[0m | [1mINFO    [0m | [36msrc.quotes[0m:[36mchunks[0m:[36m41[0m - [1m[+] Stocks chunked into groups of 200..[0m
+[32m2022-05-14 13:51:55.154[0m | [1mINFO    [0m | [36mmodels.mysql_db[0m:[36mcreate_marketdata_engine[0m:[36m25[0m - [1m[+] marketdata database engine created successfully[0m
+[32m2022-05-14 13:51:55.156[0m | [1mINFO    [0m | [36msrc.fundamentals[0m:[36mchunks[0m:[36m35[0m - [1m[+] Stocks chunked into groups of 200..[0m
+[32m2022-05-14 13:51:55.158[0m | [1mINFO    [0m | [36mmodels.mysql_db[0m:[36mcreate_marketdata_engine[0m:[36m25[0m - [1m[+] marketdata database engine created successfully[0m
+[32m2022-05-14 13:51:55.160[0m | [1mINFO    [0m | [36m__main__[0m:[36m<module>[0m:[36m28[0m - [1m[+] Main Script Started[0m
+[32m2022-05-14 13:51:55.162[0m | [1mINFO    [0m | [36m__main__[0m:[36m<module>[0m:[36m36[0m - [1m[-] Getting Quote Data[0m
+[32m2022-05-14 13:51:55.163[0m | [1mINFO    [0m | [36msrc.quotes[0m:[36mexecute_main[0m:[36m81[0m - [1m[-] Executing the main Quote Object Method[0m
+[32m2022-05-14 13:53:52.787[0m | [1mINFO    [0m | [36msrc.quotes[0m:[36mexecute_main[0m:[36m85[0m - [1m[+] Quote Data Received[0m
+[32m2022-05-14 13:53:54.584[0m | [1mINFO    [0m | [36mmodels.mysql_db[0m:[36minsert_quote_data_mysql[0m:[36m84[0m - [1m[+] Quote data inserted successfully[0m
+[32m2022-05-14 13:53:54.592[0m | [1mINFO    [0m | [36m__main__[0m:[36m<module>[0m:[36m39[0m - [1m[+] Quote Data Received[0m
+[32m2022-05-14 13:53:54.594[0m | [1mINFO    [0m | [36m__main__[0m:[36m<module>[0m:[36m42[0m - [1m[-] Getting Fundamental Data[0m
+[32m2022-05-14 13:53:54.595[0m | [1mINFO    [0m | [36msrc.fundamentals[0m:[36mexecute_main[0m:[36m75[0m - [1m[-] Executing the main Fundamental Object Method[0m
+[32m2022-05-14 13:55:50.876[0m | [1mINFO    [0m | [36msrc.fundamentals[0m:[36mexecute_main[0m:[36m79[0m - [1m[+] Fundamental Data Received[0m
+[32m2022-05-14 13:55:52.575[0m | [1mINFO    [0m | [36mmodels.mysql_db[0m:[36minsert_fundamental_data_mysql[0m:[36m101[0m - [1m[+] Fundamental Data Inserted[0m
+[32m2022-05-14 13:55:52.579[0m | [1mINFO    [0m | [36m__main__[0m:[36m<module>[0m:[36m44[0m - [1m[+] Fundamental Data Received[0m
+[32m2022-05-14 13:55:52.581[0m | [1mINFO    [0m | [36m__main__[0m:[36m<module>[0m:[36m56[0m - [1m[+] Main Script finished in 3.9569769779841106 minutes -[0m

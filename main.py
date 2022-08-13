@@ -10,7 +10,7 @@ import time
 
 
 # CREATE THE LOGGER FOR THIS SCRIPT:
-log_path = str(os.path.pardir) + '/logs/'
+log_path = str(os.path.curdir) + '/logs/'
 base_fmt = "[{time:YYYY-MM-DD at HH:mm:ss}]|[{name}-<lvl>{message}</lvl>]"
 logger.add(log_path+"main.log", rotation="5 MB",
            colorize=True, enqueue=True, catch=True)
