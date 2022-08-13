@@ -99,16 +99,15 @@ class PriceHistory:
 
     def insert_price_data(self, stock):
         data = self.data(stock)
-        table = self.table_name
         engine = self.pricehistory_engine
-        data.to_sql(name=table, con=engine, if_exists='append', index=False)
+        data.to_sql(name=self.table_name, con=engine, if_exists='append', index=False)
         logger.info(base_fmt+"{} inserted successfully!", stock)
 
     def execute_main(self):
         symbol = generate_symbols()
         try:
             count = 0
-            while True:
+            while symbol:
                 try:
                     stock = next(symbol)
                     self.insert_price_data(stock)
