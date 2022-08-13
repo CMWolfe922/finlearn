@@ -4,18 +4,33 @@ from config.secrets import MYSQL_HOST, MYSQL_PORT, MYSQL_PASSWORD, MYSQL_USER, M
 from loguru import logger
 import os.path
 
+# =============================================================================== #
 # CREATE THE LOGGER FOR THIS SCRIPT:
+# =============================================================================== #
 log_path = str(os.path.pardir) + '/logs/'
 base_fmt = "[{time:YYYY-MM-DD at HH:mm:ss}]|[{name}-<lvl>{message}</lvl>]"
 logger.add(log_path+"main.log", rotation="2 MB",
            colorize=True, enqueue=True, catch=True)
 
+# =============================================================================== #
+# GLOBAL VARIABLES:
+# =============================================================================== #
 h, u, pw = MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD
-
-# DATABASES FOR INSERTING AND QUERYING DATA FROM:
 marketdata_db = MYSQL_MARKET_DB
 pricehistory_db = MYSQL_PRICEHISTORY_DB
 
+# =============================================================================== #
+# # Create a marketdata config dictionary to use to connect to mysql server
+# =============================================================================== #
+marketdata_config = {
+	'host': MYSQL_HOST,
+	'port': MYSQL_PORT,
+	'database': MYSQL_MARKET_DB,
+	'user': MYSQL_USER,
+	'password': MYSQL_PASSWORD,
+	'use_unicode': True,
+	'get_warnings': True,
+}
 
 # CREATE A FUNCTION FOR CONNECTING TO EACH DATABASE:
 def create_marketdata_engine():
@@ -39,15 +54,14 @@ connection_uri = f"mysql+mysqldb://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{M
 
 
 # CREATE A FUNCTION TO SELECT SYMBOLS FROM MYSQL DATABASE
-def _select_symbols():
+def _select_symbols(config:dict=marketdata_config):
     """Selects rows from table. Give DB name, table name, and
     num of rows to select and display"""
-    db = marketdata_db
     table = 'companies'
     query_symbols = f"SELECT symbol FROM {table}"
     try:
         symbols = []
-        with connect(host=h, user=u, password=pw, database=db) as conn:
+        with connect(**config) as conn:
             with conn.cursor() as cursor:
                 cursor.execute(query_symbols)
                 result = cursor.fetchall()
