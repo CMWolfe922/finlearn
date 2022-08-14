@@ -1,4 +1,5 @@
-from config.secrets import mysql_config, url, rapidAPI_yahoo_headers
+# from config.secrets import mysql_config, url, rapidAPI_yahoo_headers
+# I NEED A BETTER WAY TO GET THE MYSQL CONFIG DATA. OR I CAN IMPORT IT FROM mysql_db.py
 import mysql.connector as mysql
 from mysql.connector import Error
 import yfinance as yf
