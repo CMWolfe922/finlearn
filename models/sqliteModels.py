@@ -3,9 +3,13 @@ from time import time
 import pandas as pd
 import os
 
-market_db_uri = 'data\\marketdata.db'
-ph_db_uri = 'data\\pricehistory.db'
+# Ubuntu Data paths
+market_db_uri = 'data/marketdata.db'
+ph_db_uri = 'data/pricehistory.db'
 
+# Windows data paths
+# market_db_uri = 'data\\marketdata.db'
+# ph_db_uri = 'data\\pricehistory.db'
 
 # ----------------------------------------------------------- #
 # CREATE FUNCTION TO INSERT COMPANY DATA FROM STOCKDATA
@@ -57,7 +61,7 @@ def _query_symbols():
         for row in cur.execute(query_symbols):
             symbols.append(row)
 
-        if len(symbols) > 19000:
+        if len(symbols) > 18000:
             print("[+] List of all symbols created.")
             return symbols
 

@@ -38,3 +38,21 @@
 # FREQUENCYTYPE = config['Params']['frequencyType']
 
 
+# MySQL Ubuntu Database
+MYSQL_USER = ""
+MYSQL_PASSWORD = ""
+MYSQL_HOST = ""
+MYSQL_PORT = ""
+
+# TDAmeritrade Secrets
+TDA_APIKEY = "C1TEUG4JBLJU89X2GDXQ2RHHGUYX0XUZ"
+TDA_CONSUMERID = ""
+TDA_USERNAME = ""
+TDA_PASSWORD = ""
+
+# Price History Parameters
+PERIOD = ""
+PERIODTYPE = ""
+FREQUENCY = ""
+FREQUENCYTYPE = ""
+
